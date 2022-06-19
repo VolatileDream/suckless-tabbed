@@ -1,13 +1,14 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const char font[]        = "monospace:size=9";
+// Colors have been matched to i3 & i3bar
 static const char* normbgcolor  = "#222222";
-static const char* normfgcolor  = "#cccccc";
-static const char* selbgcolor   = "#555555";
+static const char* normfgcolor  = "#888888";
+static const char* selbgcolor   = "#285577";
 static const char* selfgcolor   = "#ffffff";
-static const char* urgbgcolor   = "#111111";
-static const char* urgfgcolor   = "#cc0000";
+static const char* urgbgcolor   = "#900000";
+static const char* urgfgcolor   = "#ffffff";
+static const char font[]        = "monospace:size=9";
 static const char before[]      = "<";
 static const char after[]       = ">";
 static const char titletrim[]   = "...";
