@@ -167,7 +167,7 @@ static int (*xerrorxlib)(Display *, XErrorEvent *);
 static int cmd_append_pos;
 static char winid[64];
 static char **cmd;
-static char *wmname = "tabbed";
+static const char *wmname = "tabbed";
 static const char *geometry;
 
 char *argv0;
@@ -456,7 +456,7 @@ expose(const XEvent *e)
 void
 focus(int c)
 {
-	char buf[BUFSIZ] = "tabbed-"VERSION" ::";
+	char buf[BUFSIZ] = "tabbed-" VERSION " ::";
 	size_t i, n;
 	XWMHints* wmh;
 
@@ -515,12 +515,14 @@ focusin(const XEvent *e)
 void
 focusonce(const Arg *arg)
 {
+  (void) arg; // unused
 	nextfocus = True;
 }
 
 void
 focusurgent(const Arg *arg)
 {
+  (void) arg; // unused
 	int c;
 
 	if (sel < 0)
@@ -537,6 +539,7 @@ focusurgent(const Arg *arg)
 void
 fullscreen(const Arg *arg)
 {
+  (void) arg; // unused
 	XEvent e;
 
 	e.type = ClientMessage;
@@ -688,6 +691,7 @@ keypress(const XEvent *e)
 void
 killclient(const Arg *arg)
 {
+  (void) arg; // unused
 	XEvent ev;
 
 	if (sel < 0)
@@ -1093,6 +1097,7 @@ setup(void)
 void
 sigchld(int unused)
 {
+  (void) unused; // unused
 	if (signal(SIGCHLD, sigchld) == SIG_ERR)
 		die("%s: cannot install SIGCHLD handler", argv0);
 
@@ -1108,9 +1113,9 @@ spawn(const Arg *arg)
 
 		setsid();
 		if (arg && arg->v) {
-			execvp(((char **)arg->v)[0], (char **)arg->v);
+			execvp(((char* const*)arg->v)[0], (char* const*)arg->v);
 			fprintf(stderr, "%s: execvp %s", argv0,
-			        ((char **)arg->v)[0]);
+			        ((char* const*)arg->v)[0]);
 		} else {
 			cmd[cmd_append_pos] = NULL;
 			execvp(cmd[0], cmd);
@@ -1125,14 +1130,15 @@ int
 textnw(const char *text, unsigned int len)
 {
 	XGlyphInfo ext;
-	XftTextExtentsUtf8(dpy, dc.font.xfont, (XftChar8 *) text, len, &ext);
+	XftTextExtentsUtf8(dpy, dc.font.xfont, (const XftChar8 *) text, len, &ext);
 	return ext.xOff;
 }
 
 void
 toggle(const Arg *arg)
 {
-    *(Bool*) arg->v = !*(Bool*) arg->v;
+    // Intentionally drop the const qualifier.
+    *(Bool*) arg->v = !*(const Bool*) arg->v;
 }
 
 void
@@ -1238,7 +1244,7 @@ updatetitle(int c)
  * ignored (especially on UnmapNotify's).  Other types of errors call Xlibs
  * default error handler, which may call exit.  */
 int
-xerror(Display *dpy, XErrorEvent *ee)
+xerror(Display *display, XErrorEvent *ee)
 {
 	if (ee->error_code == BadWindow
 	    || (ee->request_code == X_SetInputFocus &&
@@ -1261,7 +1267,7 @@ xerror(Display *dpy, XErrorEvent *ee)
 
 	fprintf(stderr, "%s: fatal error: request code=%d, error code=%d\n",
 	        argv0, ee->request_code, ee->error_code);
-	return xerrorxlib(dpy, ee); /* may call exit */
+	return xerrorxlib(display, ee); /* may call exit */
 }
 
 void
@@ -1346,7 +1352,7 @@ main(int argc, char *argv[])
 		urgbgcolor = EARGF(usage());
 		break;
 	case 'v':
-		die("tabbed-"VERSION", © 2009-2016 tabbed engineers, "
+		die("tabbed-" VERSION ", © 2009-2016 tabbed engineers, "
 		    "see LICENSE for details.\n");
 		break;
 	default:
