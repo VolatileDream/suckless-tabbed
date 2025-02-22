@@ -35,7 +35,7 @@ static Bool npisrelative  = False;
 }
 
 #define MODKEY ControlMask
-static Key keys[] = {
+static const Key keys[] = {
   // All matching modifiers are run in the order they appear here.
 	/* modifier             key        function     argument */
 
