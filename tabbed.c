@@ -1161,6 +1161,11 @@ toggle(const Arg *arg)
 void
 unmanage(int c)
 {
+	int i, j;
+	unsigned int modifiers[] = { 0, LockMask, numlockmask,
+	                             numlockmask | LockMask };
+	KeyCode code;
+
 	if (c < 0 || c >= nclients) {
 		drawbar();
 		XSync(dpy, False);
@@ -1169,6 +1174,15 @@ unmanage(int c)
 
 	if (!nclients)
 		return;
+
+	/* ungrab keys */
+	for (i = 0; i < LENGTH(keys); i++) {
+		if ((code = XKeysymToKeycode(dpy, keys[i].keysym))) {
+			for (j = 0; j < LENGTH(modifiers); j++) {
+				XUngrabKey(dpy, code, keys[i].mod | modifiers[j], clients[c]->win);
+			}
+		}
+	}
 
 	if (c == 0) {
 		/* First client. */
