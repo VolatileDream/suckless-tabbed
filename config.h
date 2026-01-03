@@ -44,10 +44,12 @@ static const Key keys[] = {
 	{ MODKEY,               XK_t,      spawn,       { 0 } },
 
   // '.i = 0' causes rotate to switch to the 'last active'
-	{ MODKEY,               XK_Tab,    rotate,      { .i = +1 } },
-	{ MODKEY|ShiftMask,     XK_Tab,    rotate,      { .i = -1 } },
-	{ MODKEY|ShiftMask,     XK_Left,   movetab,     { .i = -1 } },
-	{ MODKEY|ShiftMask,     XK_Right,  movetab,     { .i = +1 } },
+	{ MODKEY,               XK_Tab,          rotate,      { .i = +1 } },
+	{ MODKEY|ShiftMask,     XK_Tab,          rotate,      { .i = -1 } },
+	{ MODKEY,               XK_Page_Down,    rotate,      { .i = +1 } },
+	{ MODKEY,               XK_Page_Up,      rotate,      { .i = -1 } },
+	{ MODKEY|ShiftMask,     XK_Left,         movetab,     { .i = -1 } },
+	{ MODKEY|ShiftMask,     XK_Right,        movetab,     { .i = +1 } },
 
 	//{ MODKEY,               XK_grave,  spawn,       SETPROP("_TABBED_SELECT_TAB") },
 	{ MODKEY,               XK_1,      move,        { .i = 0 } },

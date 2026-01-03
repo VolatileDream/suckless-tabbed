@@ -6,7 +6,6 @@ filegroup(
   visibility = ["//visibility:public"],
 )
 
-
 cc_library(
   name = "config",
   hdrs = ["config.h"],
