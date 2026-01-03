@@ -25,7 +25,7 @@ cc_binary(
     ":config",
   ],
   defines = [
-    "VERSION=\\\"0.6+bazel\\\"",
+    "VERSION=\\\"0.9+bazel\\\"",
   ],
   copts = [
     # This binary depends on libxft-dev, and freetype2
